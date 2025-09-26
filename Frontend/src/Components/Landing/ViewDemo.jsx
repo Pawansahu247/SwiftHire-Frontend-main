@@ -23,7 +23,7 @@ const ViewDemo = ({ isOpen, onClose, videoUrl = VIDEO_URL }) => {
     useEffect(() => {
         if (isOpen && !window.Vimeo) {
             const script = document.createElement('script');
-            script.src = "https://player.vimeo.com/api/player.js";
+            script.src = "#";
             script.async = true;
             document.body.appendChild(script);
             return () => {
