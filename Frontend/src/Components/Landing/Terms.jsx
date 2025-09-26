@@ -16,7 +16,7 @@ const Terms = () => {
     };
 
     const handleConfirmEmail = () => {
-        window.location.href = "mailto:team.recrumeta@gmail.com";
+        window.location.href = "mailto:swifthire.official@gmail.com";
         setShowConfirmDialog(false);
     };
 
@@ -90,7 +90,7 @@ const Terms = () => {
                 <section className="mb-4">
                     <h2 className="text-xl font-semibold mb-2">1. Eligibility</h2>
                     <p className="text-gray-700 mb-4">
-                        You must be at least 18 years old or the age of majority in your jurisdiction to use our services. By using Recrumeta, you confirm that you meet these requirements.
+                        You must be at least 18 years old or the age of majority in your jurisdiction to use our services. By using SwiftHire, you confirm that you meet these requirements.
                     </p>
                 </section>
 

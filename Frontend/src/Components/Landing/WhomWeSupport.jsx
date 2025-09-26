@@ -105,7 +105,7 @@ function WhomWeSupport() {
                             </div>
                             <div className="text-left text-sm md:text-base">
                                 <p>
-                                    Recruiting top engineering talent is challenging - Recrumeta makes it easy. Our modern platform empowers recruiters to efficiently source, engage, and hire qualified engineers.
+                                    Recruiting top engineering talent is challenging - SwiftHire makes it easy. Our modern platform empowers recruiters to efficiently source, engage, and hire qualified engineers.
                                 </p>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ function WhomWeSupport() {
                             </div>
                             <div className="text-left text-sm md:text-base">
                                 <p>
-                                    Hiring exceptional engineering talent is tough—Recrumeta streamlines the process. Our modern platform empowers hiring managers to identify, evaluate, and onboard skilled engineers seamlessly.                                </p>
+                                    Hiring exceptional engineering talent is tough—SwiftHire streamlines the process. Our modern platform empowers hiring managers to identify, evaluate, and onboard skilled engineers seamlessly.                                </p>
                             </div>
                         </div>
                     </div>

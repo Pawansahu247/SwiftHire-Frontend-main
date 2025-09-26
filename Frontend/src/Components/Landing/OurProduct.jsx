@@ -90,7 +90,7 @@ function OurProduct() {
                 </div>
                 <div className='text-[14px] sm:text-[16px] lg:text-[18px] font-normal p-2 text-center lg:text-left'>
                     <p>
-                        Recrumeta adapts to your unique recruitment challenges, offering seamless, efficient, and scalable solutions. Optimize hiring, reduce costs, and secure top talent effortlessly.
+                        Swifthire adapts to your unique recruitment challenges, offering seamless, efficient, and scalable solutions. Optimize hiring, reduce costs, and secure top talent effortlessly.
                     </p>
                 </div>
                 <div className='flex flex-row flex-wrap sm:flex-row text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-medium justify-center lg:justify-start items-center gap-x-2 gap-y-0 p-2'>
@@ -148,7 +148,7 @@ function OurProduct() {
                             {/* Recruiter Card Description */}
                             <div className='text-left text-[12px] sm:text-[12px] md:text-[14px]'>
                                 <p>
-                                    Recruiting top engineering talent is challenging - Recrumeta makes it easy. Our modern platform empowers recruiters to efficiently source, engage, and hire qualified engineers.
+                                    Recruiting top engineering talent is challenging - SwiftHire makes it easy. Our modern platform empowers recruiters to efficiently source, engage, and hire qualified engineers.
                                 </p>
                             </div>
                         </div>
