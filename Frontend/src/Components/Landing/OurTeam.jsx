@@ -5,15 +5,15 @@ import Roshan from '../../assets/Roshan.png';
 import Dinanath from '../../assets/Dinanath.png';
 
 const teamMembers = [
-    {
-        name: 'Sumit Kumar Mahto',
-        role: 'Full Stack Developer',
-        image: Sumit,
-        email: 'sumit.kumar.mahto341@gmail.com',
-        linkedin: 'https://www.linkedin.com/in/7070sumit/',
-        github: 'https://github.com/7070sumit',
-        instagram: 'https://www.instagram.com/sumitkumar.451',
-    },
+    // {
+    //     name: 'Sumit Kumar Mahto',
+    //     role: 'Full Stack Developer',
+    //     image: Sumit,
+    //     email: 'sumit.kumar.mahto341@gmail.com',
+    //     linkedin: 'https://www.linkedin.com/in/7070sumit/',
+    //     github: 'https://github.com/7070sumit',
+    //     instagram: 'https://www.instagram.com/sumitkumar.451',
+    // },
     {
         name: 'Roshan Prasad Sahu',
         role: 'Full Stack Developer',
