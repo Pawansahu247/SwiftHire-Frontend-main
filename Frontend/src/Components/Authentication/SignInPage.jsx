@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Bg from "../../assets/bg.jpg";
-import Recrumeta from "../../assets/Recrumeta.png";
+// import Recrumeta from "../../assets/Recrumeta.png";
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -265,13 +265,30 @@ function SignInPage() {
           style={{ backgroundImage: `url(${Bg})` }}
         >
           <div className="px-4 py-3 h-[60px] w-full bg-transparent">
-            <Link to="/">
-              <img
-                src={Recrumeta}
-                alt="Logo"
-                className="w-[140px] h-[35px] sm:w-[200px] sm:h-[50px] cursor-pointer transition-all duration-200"
-              />
-            </Link>
+           <Link to="/">
+  <svg
+    width="180"
+    height="42"
+    viewBox="0 0 600 150"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-[140px] h-[35px] sm:w-[200px] sm:h-[50px] cursor-pointer transition-all duration-200"
+  >
+    <text
+      x="50%"
+      y="50%"
+      textAnchor="middle"
+      alignmentBaseline="middle"
+      fontFamily="sans-serif"
+      fontWeight="bold"
+      fontSize="90"
+      fill="#000"
+    >
+      Swift
+      <tspan fill="#E65F2B">Hire</tspan>
+    </text>
+  </svg>
+</Link>
+
           </div>
           <div className="w-full min-h-[calc(100vh-120px)] flex items-center justify-center px-4">
             <div className="p-4 sm:p-8 w-full max-w-[500px] bg-white bg-opacity-45 rounded-2xl">
