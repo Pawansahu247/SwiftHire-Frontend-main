@@ -1,9 +1,8 @@
-// Botpress Chatbot Integration
+// Botpress Chatbot Integration (v3.3)
 export const initBotpressChat = () => {
-  // Store the inject script reference
   let injectScriptLoaded = false;
 
-  // Define your landing page paths
+  // Define paths where chatbot should appear
   const landingPagePaths = [
     '/',
     '/terms',
@@ -12,27 +11,23 @@ export const initBotpressChat = () => {
     '/join-as-interviewer'
   ];
 
-  // Define authentication paths that should force a refresh when navigated to
+  // Paths where chatbot must be completely removed
   const authPaths = [
     '/auth/signin',
     '/auth/reset-password',
   ];
 
-  // Complete removal of Botpress elements and global objects
+  // Remove all Botpress elements
   function removeAllBotpressElements() {
-    // Remove widget container
     const container = document.getElementById('bp-web-widget-container');
     if (container) container.remove();
 
-    // Remove all script tags related to Botpress
-    const scripts = document.querySelectorAll('script[src*="botpress"]');
-    scripts.forEach(script => script.remove());
-
-    // Remove custom script
+    // Remove all Botpress scripts
+    document.querySelectorAll('script[src*="botpress"]').forEach(el => el.remove());
     const customScript = document.getElementById('botpress-script');
     if (customScript) customScript.remove();
 
-    // Clean up global objects
+    // Cleanup global object
     if (window.botpressWebChat) {
       try {
         window.botpressWebChat.sendEvent({ type: 'hide' });
@@ -40,16 +35,13 @@ export const initBotpressChat = () => {
           window.botpressWebChat.destroy();
         }
       } catch (e) {
-        console.log("Error cleaning up Botpress:", e);
+        console.warn("Error cleaning Botpress:", e);
       }
-      // Try to delete the global object
       delete window.botpressWebChat;
     }
 
-    // Remove any element with bp- prefix in class or id
+    // Remove leftover elements/iframes
     document.querySelectorAll('[class*="bp-"], [id*="bp-"]').forEach(el => el.remove());
-
-    // Clean up any iframes that might have been created
     document.querySelectorAll('iframe').forEach(iframe => {
       if (iframe.src && iframe.src.includes('botpress')) {
         iframe.remove();
@@ -57,32 +49,37 @@ export const initBotpressChat = () => {
     });
   }
 
-  // Function to load Botpress only when needed
+  // Load Botpress when needed
   function handleBotpressVisibility() {
     const currentPath = window.location.pathname;
     const isLandingPage = landingPagePaths.includes(currentPath);
 
     if (isLandingPage) {
       if (!document.getElementById('bp-web-widget-container')) {
-        // First load the inject.js if not already loaded
+        // Load inject.js first
         if (!document.getElementById('botpress-inject')) {
           const injectScript = document.createElement('script');
           injectScript.id = 'botpress-inject';
-          injectScript.src = "https://cdn.botpress.cloud/webchat/v2.4/inject.js";
+          injectScript.src = "https://cdn.botpress.cloud/webchat/v3.3/inject.js";
+          injectScript.defer = true;
+
           injectScript.onload = function () {
             injectScriptLoaded = true;
-            // Now load the configuration script
+            // Load config script
             const configScript = document.createElement('script');
             configScript.id = 'botpress-script';
-            configScript.src = "https://files.bpcontent.cloud/2025/04/28/08/20250428083729-QJ9151LC.js";
+            configScript.src = "https://files.bpcontent.cloud/2025/10/02/16/20251002164824-GO5EVDOL.js";
+            configScript.defer = true;
             document.body.appendChild(configScript);
           };
+
           document.body.appendChild(injectScript);
         } else if (injectScriptLoaded) {
-          // If inject is already loaded, just add the config script
+          // If inject.js already loaded → just reload config
           const configScript = document.createElement('script');
           configScript.id = 'botpress-script';
-          configScript.src = "https://files.bpcontent.cloud/2025/04/28/08/20250428083729-QJ9151LC.js";
+          configScript.src = "https://files.bpcontent.cloud/2025/10/02/16/20251002164824-GO5EVDOL.js";
+          configScript.defer = true;
           document.body.appendChild(configScript);
         }
       }
@@ -91,45 +88,39 @@ export const initBotpressChat = () => {
     }
   }
 
-  // Check if we should force reload based on current path
+  // Check if force reload is required
   function shouldForceReload(path) {
     return authPaths.some(authPath => path.startsWith(authPath));
   }
 
-  // Initial check
+  // Run on page load
   document.addEventListener('DOMContentLoaded', handleBotpressVisibility);
 
-  // Monitor route changes in single-page app
+  // Watch for route changes in SPA
   let lastUrl = location.href;
   const observer = new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
       const currentPath = new URL(url).pathname;
 
-      // Check if we're navigating to an auth page from a landing page
       if (shouldForceReload(currentPath) && landingPagePaths.includes(new URL(lastUrl).pathname)) {
-        // Store current URL in sessionStorage
         sessionStorage.setItem('redirectAfterReload', url);
-        // Force page reload to completely remove Botpress
         window.location.reload();
         return;
       }
 
       lastUrl = url;
-      // When URL changes, do a more aggressive cleanup
       removeAllBotpressElements();
-      // Then check if we should reload Botpress
       setTimeout(handleBotpressVisibility, 100);
     }
   });
 
   observer.observe(document, { subtree: true, childList: true });
 
-  // Handle redirect after reload
+  // Handle redirect after forced reload
   if (sessionStorage.getItem('redirectAfterReload')) {
     const redirectUrl = sessionStorage.getItem('redirectAfterReload');
     sessionStorage.removeItem('redirectAfterReload');
-    // Only redirect if we're not already at the desired URL
     if (window.location.href !== redirectUrl) {
       window.history.replaceState({}, '', redirectUrl);
     }
