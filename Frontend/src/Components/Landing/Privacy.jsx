@@ -188,8 +188,8 @@ const Privacy = () => {
                         </p>
                         <p>
                             🌐{' '}
-                            <a href="https://www.recrumeta.in" target="_blank" rel="noopener noreferrer" className="text-[#E65F2B] hover:underline">
-                                www.recrumeta.in
+                            <a href="https://swifthire-io.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-[#E65F2B] hover:underline">
+                               swifthire-io
                             </a>
                         </p>
                     </div>
