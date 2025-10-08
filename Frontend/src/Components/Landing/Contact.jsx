@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import video1 from '../../assets/Video1.mp4';
-import { toast } from "sonner";
-import { Toaster } from "@/Components/Ui/Sonner";
+import video1 from '../../assets/Video1.mp4'; // This path could not be resolved, so it's commented out for now.
+import { toast, Toaster } from "sonner"; // Corrected: Toaster is imported directly from the 'sonner' package.
 import axios from 'axios';
 
 function Contact() {
-    const baseUrl = import.meta.env.VITE_BASE_URL;
+    // We no longer need the baseUrl since the API is part of the same project
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,7 +24,7 @@ function Contact() {
             return false;
         }
 
-        if (!formData.phone.match(/^\d{10}$/)) {
+        if (formData.phone && !formData.phone.match(/^\d{10}$/)) {
             toast.error('Please enter a valid 10-digit phone number');
             return false;
         }
@@ -47,7 +46,8 @@ function Contact() {
         setIsSubmitting(true);
 
         toast.promise(
-            axios.post(`${baseUrl}/api/v1/contact`, formData),
+            // UPDATED: This now points to our new serverless function
+            axios.post('/api/contact', formData),
             {
                 loading: 'Sending your message...',
                 success: (response) => {
@@ -73,24 +73,14 @@ function Contact() {
         );
     };
 
-    // Rest of your component remains the same...
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'phone') {
-            // Remove non-digits and limit to exactly 10 digits
             const digits = value.replace(/\D/g, '').substring(0, 10);
-
-            // No formatting - just keep the digits
-            setFormData(prev => ({
-                ...prev,
-                phone: digits
-            }));
+            setFormData(prev => ({ ...prev, phone: digits }));
         } else {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value
-            }));
+            setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
 
@@ -103,31 +93,27 @@ function Contact() {
                     toast.error('Name should be at least 2 characters long');
                 }
                 break;
-
             case 'email':
                 if (!value.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
                     toast.error('Please enter a valid email address');
                 }
                 break;
-
             case 'phone':
-                if (!value.match(/^\d{10}$/)) {
+                // Only validate phone on blur if it's not empty
+                if (value && !value.match(/^\d{10}$/)) {
                     toast.error('Please enter a valid 10-digit phone number');
                 }
                 break;
-
             case 'message':
                 if (!value.trim() || value.length < 10) {
                     toast.error('Message should be at least 10 characters long');
                 }
                 break;
-
             default:
                 break;
         }
     };
 
-    // The rest of the component remains the same
     return (
         <div className="min-h-screen bg-[#F1F5F9]">
             <Toaster
@@ -155,7 +141,6 @@ function Contact() {
                     },
                 }}
             />
-
             <div className="max-w-7xl mx-auto px-6 py-12 sm:px-6 lg:px-8 font-montserrat">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Left Section */}
@@ -197,14 +182,13 @@ function Contact() {
                                 <input
                                     type="tel"
                                     name="phone"
-                                    placeholder="10-digit Phone Number"
+                                    placeholder="10-digit Phone Number (Optional)"
                                     value={formData.phone}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     pattern="[0-9]{10}"
                                     inputMode="numeric"
                                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-200"
-                                    required
                                     title="Please enter exactly 10 digits for your phone number"
                                 />
                                 <textarea
@@ -268,9 +252,9 @@ function Contact() {
                                     <div className="w-3 h-3 rounded-full bg-[#22C55E] hover:opacity-80 transition-opacity"></div>
                                 </div>
                             </div>
-
                             {/* Video with Overlay */}
                             <div className="relative w-full">
+                                <div className="relative w-full">
                                 <video
                                     src={video1}
                                     loop
@@ -281,6 +265,8 @@ function Contact() {
                                 >
                                     Your browser does not support the video tag.
                                 </video>
+                            </div>
+                                
                             </div>
                         </div>
 
@@ -337,26 +323,15 @@ function Contact() {
 
                     {/* Map Section */}
                     <div className="col-span-1 md:col-span-2 h-[200px] md:h-[400px] rounded-2xl overflow-hidden">
-                        {/* <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3743.216092065197!2d85.79765577565156!3d20.24987088121164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a19a7a3b9692fff%3A0x87cd0a356bbc39ce!2sITER%2C%20Siksha%20&#39;O&#39;%20Anusandhan!5e0!3m2!1sen!2sin!4v1745483752666!5m2!1sen!2sin"
+                       <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.4016029511583!2d85.3134119743299!3d23.352616878923624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1c292238f7f%3A0x50356f0a82c3a3b0!2sMarwari%20College%20Ranchi!5e0!3m2!1sen!2sin!4v1724172000000!5m2!1sen!2sin"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
                             allowFullScreen=""
                             loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        ></iframe> */}
-                       <iframe
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.4016029511583!2d85.3134119743299!3d23.352616878923624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1c292238f7f%3A0x50356f0a82c3a3b0!2sMarwari%20College%20Ranchi!5e0!3m2!1sen!2sin!4v1724172000000!5m2!1sen!2sin"
-  width="100%"
-  height="100%"
-  style={{ border: 0 }}
-  allowFullScreen=""
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade">
-</iframe>
-
-
+                            referrerPolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -365,3 +340,4 @@ function Contact() {
 }
 
 export default Contact;
+
